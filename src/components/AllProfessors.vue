@@ -12,20 +12,22 @@
       />
     </form>
     <hr />
-    <ul>
-      <li v-for="professor in filteredProfessors" :key="professor.id">
-        <router-link :to="singleProfessor(professor.id)">
-          <img width="200" :src="professor.img" />
-          <br />
-          {{professor.first_name + ' ' + professor.last_name}}
-          <br />
-        </router-link>
-        <div v-if="professor.gradebook">
-          <router-link :to="singleGradebook(professor.gradebook.id)">{{professor.gradebook.name}}</router-link>
+    <div class="containter">
+      <div class="row">
+        <div class="col" v-for="professor in filteredProfessors" :key="professor.id">
+          <router-link :to="singleProfessor(professor.id)">
+            <img width="200" :src="professor.img" />
+            <br />
+            {{professor.first_name + ' ' + professor.last_name}}
+            <br />
+          </router-link>
+          <div v-if="professor.gradebook">
+            <router-link :to="singleGradebook(professor.gradebook.id)">{{professor.gradebook.name}}</router-link>
+          </div>
+          <div v-else>Not a headteacher</div>
         </div>
-        <div v-else>Not a headteacher</div>
-      </li>
-    </ul>
+      </div>
+    </div>
   </div>
 </template>
 

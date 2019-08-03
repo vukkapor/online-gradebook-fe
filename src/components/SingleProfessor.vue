@@ -1,16 +1,19 @@
 <template>
   <div>
-    <img width="200" height="200" :src="professor.img" />
-    <p>Name: {{professor.first_name + ' ' + professor.last_name}}</p>
-    <p v-if="professor.gradebook">
-      Gradebook name:
-      <a
-        @click="gradebookShow(professor.gradebook.id)"
-      >{{ professor.gradebook.name }}</a>
-      <br />
-      Number of students in that grade: {{professor.gradebook.students.length}}
-    </p>
-    <p v-else>Not a head teacher</p>
+    <div v-if="professor">
+      <img width="200" height="200" :src="professor.img" />
+      <p>Name: {{professor.first_name + ' ' + professor.last_name}}</p>
+      <p v-if="professor.gradebook">
+        Gradebook name:
+        <a
+          @click="gradebookShow(professor.gradebook.id)"
+        >{{ professor.gradebook.name }}</a>
+        <br />
+        Number of students in that grade: {{professor.gradebook.students.length}}
+      </p>
+      <p v-else>Not a head teacher</p>
+    </div>
+    <div v-else>There is no professor with this ID</div>
   </div>
 </template>
 

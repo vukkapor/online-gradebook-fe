@@ -14,34 +14,41 @@
     <hr />
 
     <div v-if="gradebooks.length > 0">
-      <table width="100%">
-        <tr>
-          <th>Gradebook</th>
-          <th>Professor</th>
-          <th>Created at</th>
-        </tr>
-        <tr v-for="(gradebook, index) in filteredGradebooks" :key="index">
-          <td>
-            {{gradebook.id}}
-            <button
-              class
-              @click="singleGradebook(gradebook.id)"
-            >{{ gradebook.name }}</button>
-          </td>
-          <td v-if="gradebook.professor_id">
-            <div v-if="user">
-              <a
-                class
-                @click="singleProfessor(gradebook.professor_id)"
-              >{{ gradebook.professor.first_name + ' ' +gradebook.professor.last_name }}</a>
-            </div>
-            <div v-else>
-              <strong>{{ gradebook.first_name + ' ' + gradebook.last_name }}</strong>
-            </div>
-          </td>
-          <td v-else>No professor for this gradebook</td>
-          <td>{{ gradebook.created_at }}</td>
-        </tr>
+      <table class="table" width="100%">
+        <thead>
+          <tr>
+            <th>Gradebook</th>
+            <th>Professor</th>
+            <th>Created at</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(gradebook, index) in filteredGradebooks" :key="index">
+            <td>
+              <button class="btn-link" @click="singleGradebook(gradebook.id)">{{ gradebook.name }}</button>
+            </td>
+            <td v-if="gradebook.professor_id">
+              <div v-if="user">
+                <img
+                  v-if="gradebook.professor.img"
+                  :src="gradebook.professor.img"
+                  height="100px"
+                  @click="singleProfessor(gradebook.professor_id)"
+                />
+                <br />
+                <button
+                  class="btn-link"
+                  @click="singleProfessor(gradebook.professor_id)"
+                >{{gradebook.professor.first_name + ' ' +gradebook.professor.last_name }}</button>
+              </div>
+              <div v-else>
+                <strong>{{ gradebook.first_name + ' ' + gradebook.last_name }}</strong>
+              </div>
+            </td>
+            <td v-else>No professor for this gradebook</td>
+            <td>{{ gradebook.created_at }}</td>
+          </tr>
+        </tbody>
       </table>
     </div>
     <div v-if="showMoreExists">
@@ -99,7 +106,9 @@ export default {
 
   computed: {
     filteredGradebooks() {
-      return this.gradebooks.filter(gradebook => gradebook.name.toLowerCase().includes(this.searchTerm.toLowerCase()));
+      return this.gradebooks.filter(gradebook =>
+        gradebook.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
     },
 
     ...mapGetters({
@@ -138,39 +147,12 @@ li {
   display: inline-block;
   margin: 0 10px;
 }
-.paginate-list {
-  width: 159px;
-  margin: 0 auto;
-  text-align: left;
-  li {
-    display: block;
-    &:before {
-      content: "⚬ ";
-      font-weight: bold;
-      color: slategray;
-    }
-  }
-}
-.paginate-links.items {
-  user-select: none;
-  a {
-    cursor: pointer;
-  }
-
-  li.active a {
-    font-weight: bold;
-  }
-  li.next:before {
-    content: " | ";
-    margin-right: 13px;
-    color: #ddd;
-  }
-  li.disabled a {
-    color: #ccc;
-    cursor: no-drop;
-  }
-}
 a {
   color: #42b983;
+}
+button {
+  padding: 0;
+  border: none;
+  background: none;
 }
 </style>
